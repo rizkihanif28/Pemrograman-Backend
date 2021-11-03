@@ -42,27 +42,29 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $student = Student::find($id);
+        $student = Student::where('id', $id)->first();
         if ($student) {
-            $input = [
-                'nama' => $request->nama ?? $student->nama,
-                'nim' => $request->nim ?? $student->nim,
-                'email' => $request->email ?? $student->email,
-                'jurusan' => $request->jurusan ?? $student->jurusan
-            ];
-            $student->update($input);
+
+            $student->nama = $request->nama ? $request->nama : $student->nama;
+            $student->nim = $request->nim ? $request->nim : $student->nim;
+            $student->email = $request->email ? $request->email : $student->email;
+            $student->jurusan = $request->jurusan ? $request->jurusan : $student->jurusan;
+
+            $student->save();
 
             $response = [
-                "message" => "Student is Update",
-                "data" => $student
+                'message' => 'update',
+                'data' => 'id ' . $id . ' success'
             ];
-            return response()->json($response, 200);
-        } else {
-            $response = [
-                "message" => "Data Not Found"
-            ];
-            return response($response, 404);
+
+            return response($response, 201);
         }
+        $response = [
+            'message' => 'update failed',
+            'data' => 'id ' . $id . ' not found'
+        ];
+
+        return response($response, 400);
     }
 
     public function destroy($id)
