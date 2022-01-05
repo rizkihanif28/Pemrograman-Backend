@@ -12,11 +12,20 @@ class Student {
       });
     });
   }
-  static create() {
+  static async create(data) {
+    // promise 1: insert data ke database
+    const id = await new Promise((resolve, reject) => {
+      // insert data ke db
+      const insert = "INSERT INTO students SET ?";
+      db.query(insert, data, (err, results) => {
+        resolve(results.insertId);
+      });
+    });
+    // promise 2: select data ke database (supaya terbaca ketika test)
     return new Promise((resolve, reject) => {
-      // insert db
-      const insert_sql = "INSERT INTO students SET";
-      db.query(insert_sql, (err, results) => {
+      // select data
+      const select = "SELECT * from students WHERE id=?";
+      db.query(select, id, (err, results) => {
         resolve(results);
       });
     });

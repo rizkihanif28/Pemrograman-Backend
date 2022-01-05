@@ -15,22 +15,21 @@ class StudentController {
     res.status(200).json(data);
   }
 
-  store(req, res) {
-    const { nama } = req.body;
+  async store(req, res) {
+    // memanggil model dan kirim datanya
+    const student = await Student.create(req.body);
     const data = {
-      message: `menambahkan data students ${nama}`,
-      data: [],
+      message: "menambahkan data students",
+      data: student,
     };
     res.json(data);
   }
 
   update(req, res) {
     const { id } = req.params;
-    const { nama } = req.body;
-
     const data = {
-      message: `mengupdate data students id ${id}, nama ${nama}`,
-      data: [],
+      message: "menampilkan semua student",
+      data: students,
     };
     res.json(data);
   }
