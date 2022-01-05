@@ -22,7 +22,7 @@ class Student {
       });
     });
     // promise 2: select data ke database (supaya terbaca ketika test)
-    const student = await this.find();
+    const student = await this.find(id);
     return student;
   }
 
