@@ -21,7 +21,7 @@ class Student {
         resolve(results.insertId);
       });
     });
-    // promise 2: select data ke database (supaya terbaca ketika test)
+    // memanggil kembali method find select by id
     const student = await this.find(id);
     return student;
   }
