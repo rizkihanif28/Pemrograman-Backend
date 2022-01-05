@@ -28,8 +28,8 @@ class StudentController {
   update(req, res) {
     const { id } = req.params;
     const data = {
-      message: "menampilkan semua student",
-      data: students,
+      message: `mengupdate data student ${id}`,
+      data: [],
     };
     res.json(data);
   }
