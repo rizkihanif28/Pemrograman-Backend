@@ -6,8 +6,7 @@ const validator = [
     .withMessage("name must be filled")
     .isString() // harus string
     .withMessage("name must be of type string")
-    .trim() // menghilangkan whitespace
-    .escape(), // menghindari string yang berpotensi bahaya
+    .trim(), // menghilangkan whitespace
 
   check("no_handphone") // cek field no_handphone
     .notEmpty() // tidak boleh kosong
@@ -20,8 +19,7 @@ const validator = [
   check("alamat") // cek field alamat
     .notEmpty() // tidak boleh kosong
     .withMessage("address must be filled")
-    .trim() // menghilangkan whitespace
-    .escape(), // menghindari string yang berpotensi bahaya
+    .trim(), // menghilangkan whitespace
 
   check("status") // cek field status
     .notEmpty() // tidak boleh kosong
@@ -33,20 +31,17 @@ const validator = [
     .notEmpty() // tidak boleh kosong
     .withMessage("tgl_masuk must be filled")
     .isDate() // harus bertype date
-    .withMessage("tgl_masuk must be of type date"),
-
-  // cek tgl_keluar
-  check("tgl_keluar").isDate().withMessage("tgl_keluar must be of type dat"),
+    .withMessage("tgl_masuk must be have format (YY-MM-DD)"),
 ];
 
 // membuat variable untuk konsumsi validator saat insert data
-const validateInsert = [
+const validatePatient = [
   // panggil variable validator
   validator,
   // callback function
   // membuat kondisi validasi dan respon
   (req, res, next) => {
-    // membuat variable berisikan request yang ingin di validasi
+    // membuat variable untuk kondisi saat validasi insert data
     const erorrs = validationResult(req);
     // jika ada erorrs, maka akan menampilkan data array yang tertulis pada check validator
     if (!erorrs.isEmpty()) {
@@ -57,4 +52,5 @@ const validateInsert = [
   },
 ];
 
-module.exports = validateInsert;
+// exports valiadasi untuk di gunakan di routes
+module.exports = validatePatient;

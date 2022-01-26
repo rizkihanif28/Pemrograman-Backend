@@ -43,7 +43,6 @@ class Patient {
         resolve(results.insertId);
       });
     });
-    // memanggil kembali method find selectById
     const patient = await this.find(id);
     return patient;
   }
@@ -53,7 +52,7 @@ class Patient {
       // query mencari id
       const sql = "SELECT * FROM patients WHERE id=?";
       db.query(sql, id, (err, results) => {
-        resolve(results[0]);
+        resolve(results);
       });
     });
   }
@@ -62,13 +61,66 @@ class Patient {
     await new Promise((resolve, reject) => {
       // query update data
       const sql = "UPDATE patients SET ? WHERE id=?";
-      db.query(sql, [id, data], (err, results) => {
+      db.query(sql, [data, id], (err, results) => {
         resolve(results);
       });
     });
     // panggil method find untuk mencari id
     const patient = await this.find(id);
     return patient;
+  }
+
+  static async delete(id) {
+    await new Promise((resolve, reject) => {
+      // query delete data berdasarkan id
+      const sql = "DELETE FROM patients WHERE id=?";
+      db.query(sql, id, (err, results) => {
+        resolve(results);
+      });
+    });
+    // panggil kembali method find untuk mencari id
+    const patient = await this.find(id);
+    return patient;
+  }
+
+  static getSearch(name) {
+    return new Promise((resolve, reject) => {
+      // query search data berdasarkan nama
+      const sql = "SELECT * FROM patients WHERE nama = ?";
+      db.query(sql, name, (err, results) => {
+        resolve(results);
+      });
+    });
+  }
+
+  static getPositive(status) {
+    return new Promise((resolve, reject) => {
+      // query search berdasarkan status positive
+      const sql = "SELECT * FROM patients WHERE status = ?";
+      db.query(sql, status, (err, results) => {
+        resolve(results);
+      });
+    });
+  }
+
+  static getRecovered(status) {
+    return new Promise((resolve, reject) => {
+      // query berdasarkan status recovered
+      const sql = "SELECT * FROM patients WHERE status = ?";
+      db.query(sql, status, (err, results) => {
+        resolve(results);
+      });
+    });
+  }
+
+  static getDead(status) {
+    return new Promise((resolve, reject) => {
+      // query berdasarkan status dead
+      const sql = "SELECT * FROM patients WHERE status = ?";
+      db.query(sql, status, (err, results) => {
+        resolve(results);
+      });
+    });
   }
 }
 
